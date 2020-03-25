@@ -94,7 +94,7 @@ date = NOW() ,email = '$email' ";
 }else{
 header('Location:login.php');
 }
-lolwhat
+
 
 include "../elems/layout.php";
 ?>
