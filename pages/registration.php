@@ -10,6 +10,7 @@ if(empty($_SESSION['auth'])) {
     $isPass = '';
     $isEmail = '';
 
+
     //проверка на заполнение
     if (!empty($_POST['user']) and !empty($_POST['password']) and !empty($_POST['birthday']) and !empty(
         $_POST['email'])) {
@@ -97,4 +98,7 @@ header('Location:login.php');
 
 
 include "../elems/layout.php";
+$query = "SELECT * FROM user WHERE login = '$login' ";
+                            $data = mysqli_query($connect, $query) or die(mysqli_error($connect));
+                            $user = mysqli_fetch_assoc($data);
 ?>
