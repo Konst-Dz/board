@@ -10,18 +10,13 @@ if(empty($_SESSION['auth'])) {
     $isPass = '';
     $isEmail = '';
 
-
     //проверка на заполнение
-    if (!empty($_POST['user']) and !empty($_POST['password']) and !empty($_POST['birthday']) and !empty(
-        $_POST['email'])) {
+    if (!empty($_POST['login']) and !empty($_POST['password']) and !empty($_POST['email'])) {
 
-        $login = $_POST['user'];
+        $login = $_POST['login'];
         //хэш
         $password = password_hash($_POST['password'],PASSWORD_DEFAULT);
         $email = $_POST['email'];
-        $birthday = $_POST['birthday'];
-        $country = $_POST['country'];
-
 
         //проверка на соотв. пароля
         if ($_POST['password'] == $_POST['confirm']) {
@@ -44,15 +39,17 @@ if(empty($_SESSION['auth'])) {
                             $user = mysqli_fetch_assoc($data);
 
                             if (!$user) {
+
                                 //запись в БД
                                 $query = "INSERT INTO user SET login = '$login',password = '$password',
-date = NOW() ,email = '$email' ";
+date_registration = NOW() ,email = '$email' ";
                                 mysqli_query($connect, $query) or die(mysqli_error($connect));
 
                                 //немедленная авторизация
                                 $_SESSION['auth'] = true;
                                 //запрос на ид и запись в сессию
                                 $id = mysqli_insert_id($connect);
+                                $_SESSION['login'] = $login;
                                 $_SESSION['id'] = $id;
 
                                 header('Location:../index.php');
@@ -85,7 +82,7 @@ date = NOW() ,email = '$email' ";
     $content = '';
     $content .= "<form method=\"POST\" action=\"\">";
     $content .= $isLogin;
-    $content .= "<input type=\"text\" name=\"user\"> Login<br><br>";
+    $content .= "<input type=\"text\" name=\"login\"> Login<br><br>";
     $content .= $isPass;
     $content .= "<input type=\"password\" name=\"password\"> Password<br><br>";
     $content .= "<input type=\"password\" name=\"confirm\"> Confirm Password<br> <br>";
@@ -98,7 +95,3 @@ header('Location:login.php');
 
 
 include "../elems/layout.php";
-$query = "SELECT * FROM user WHERE login = '$login' ";
-                            $data = mysqli_query($connect, $query) or die(mysqli_error($connect));
-                            $user = mysqli_fetch_assoc($data);
-?>
