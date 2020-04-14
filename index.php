@@ -1,6 +1,6 @@
 <?php
 include "elems/link.php";
-
+var_dump($_SERVER['REQUEST_URI']);
  //список категорий.
 $list = '';
 $query = "SELECT * FROM category";

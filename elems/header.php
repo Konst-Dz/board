@@ -1,14 +1,14 @@
 <?php
+if($_SERVER['REQUEST_URI'] == '/' or $_SERVER['REQUEST_URI'] == '/index.php'){
+    $mainPage = '';
+}
+else {
+    $mainPage = "<a href=\"/index.php\">Главная</a><br>";
+}
 if(!empty($_SESSION['auth'])){
     $id = $_SESSION['id'];
     $login = $_SESSION['login'];
 
-if($_SERVER['REQUEST_URI'] == '/' or $_SERVER['REQUEST_URI'] == '/index.php'){
-    $mainPage = '';
-}
-else{
-    $mainPage = "<a href=\"/index.php\">Главная</a><br>";
-}
     echo "Добрый день, $login <br>";
     echo $mainPage;
     echo "<a href=\"../pages/logout.php\">Выйти</a><br>";
